@@ -94,7 +94,7 @@ const displayMovements = function (movements, sort = false) {
         <div class="movements__type movements__type--${type}">${
       i + 1
     } ${type}</div>
-        <div class="movements__value">${mov}€</div>
+        <div class="movements__value">${mov.toFixed(2)}€</div>
       </div>
     `;
 
@@ -104,19 +104,19 @@ const displayMovements = function (movements, sort = false) {
 
 const calcDisplayBalance = function (acc) {
   acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
-  labelBalance.textContent = `${acc.balance}€`;
+  labelBalance.textContent = `${acc.balance.toFixed(2)}€`;
 };
 
 const calcDisplaySummary = function (acc) {
   const incomes = acc.movements
     .filter(mov => mov > 0)
     .reduce((acc, mov) => acc + mov, 0);
-  labelSumIn.textContent = `${incomes}€`;
+  labelSumIn.textContent = `${incomes.toFixed(2)}€`;
 
   const out = acc.movements
     .filter(mov => mov < 0)
     .reduce((acc, mov) => acc + mov, 0);
-  labelSumOut.textContent = `${Math.abs(out)}€`;
+  labelSumOut.textContent = `${Math.abs(out).toFixed(2)}€`;
 
   const interest = acc.movements
     .filter(mov => mov > 0)
@@ -126,7 +126,7 @@ const calcDisplaySummary = function (acc) {
       return int >= 1;
     })
     .reduce((acc, int) => acc + int, 0);
-  labelSumInterest.textContent = `${interest}€`;
+  labelSumInterest.textContent = `${interest.toFixed(2)}€`;
 };
 
 const createUsernames = function (accs) {
@@ -206,7 +206,7 @@ btnTransfer.addEventListener('click', function (e) {
 btnLoan.addEventListener('click', function (e) {
   e.preventDefault();
 
-  const amount = Number(inputLoanAmount.value);
+  const amount = Math.floor(inputLoanAmount.value);
 
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
     // Add movement
@@ -251,3 +251,103 @@ btnSort.addEventListener('click', function (e) {
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
+
+// 1 converting and checking numbers
+
+console.log(23 === 23.0);
+
+// base 10 - 0 to 9
+
+// 1/10 = 0.1  3/10 = 3.33333333
+
+// binary base 2 - 0 to 1
+
+console.log(0.1 + 0.2 === 0.3);
+
+// conversion
+console.log(Number('23'));
+console.log(+'23');
+
+// parsing
+console.log(Number.parseInt('30px', 10));
+
+console.log(Number.parseInt('e34', 10));
+
+console.log(Number.parseInt('23.6'));
+console.log(Number.parseFloat('23.5rem'));
+
+//check if value is Nan
+console.log(Number.isNaN(20));
+console.log(Number.isNaN('20'));
+console.log(Number.isNaN(+'23m'));
+
+// check if value is number
+console.log(Number.isFinite(20));
+console.log(Number.isFinite('23'));
+console.log(Number.isFinite(+'23'));
+console.log(Number.isFinite(23 / 0));
+
+// 2 math and rounding
+console.log(Math.sqrt(25));
+console.log(25 ** (1 / 2));
+console.log(8 ** (1 / 3));
+
+console.log(Math.max(5, 38, 90, 23, 24, 2));
+
+console.log(Math.max(5, 45, '100', 3, 5, 3, 2));
+console.log(Math.max(5, 45, 4, '23a', 5, 3, 2));
+
+console.log(Math.min(5, 45, 4, '23a', 5, 3, 2));
+
+console.log(Math.PI * Number.parseFloat('10px') ** 2);
+
+console.log(Math.trunc(Math.random() * 6 + 1));
+
+const randomInt = (min, max) =>
+  Math.floor(Math.random() * (max - min) + 1) + min;
+
+console.log(randomInt(10, 20));
+
+// rounding integers
+console.log(Math.round(34.332));
+console.log(Math.round(34.9));
+
+console.log(Math.ceil(34.2));
+console.log(Math.ceil(34.9));
+
+console.log(Math.floor(23.3));
+console.log(Math.floor(23.9));
+
+console.log(Math.trunc(23.2));
+console.log(Math.trunc(23.9));
+
+// rounding decimals
+console.log((23.3).toFixed(0));
+console.log((23.34556).toFixed(2));
+console.log((23.34).toFixed(1));
+console.log(+(23.367).toFixed(0));
+
+// 3 the remainder operator
+
+console.log(5 % 2);
+console.log(5 / 2); // 5 = 2 * 2 + 1
+
+console.log(8 % 3);
+console.log(8 / 3); // 2 * 3 + 2
+
+//even
+console.log(6 % 2);
+console.log(6 / 2);
+
+//odd
+console.log(5 % 2);
+console.log(5 / 2);
+
+const isEven = n => n % 2 === 0;
+
+console.log(isEven(5));
+console.log(isEven(2));
+console.log(isEven(6));
+console.log(isEven(514));
+
+document.querySelectorAll();
